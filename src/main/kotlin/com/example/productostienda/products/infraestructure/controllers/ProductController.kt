@@ -2,9 +2,9 @@ package com.example.productostienda.products.infraestructure.controllers
 
 import com.example.productostienda.products.domain.entities.Product
 import com.example.productostienda.products.application.services.IProductService
+import com.example.productostienda.products.domain.dao.IProductDao
 import org.apache.juli.logging.LogFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.jpa.repository.Query
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -15,6 +15,9 @@ class ProductController {
 
     @Autowired
     private lateinit var productService: IProductService
+
+    @Autowired
+    lateinit var  productSql: IProductDao
 
     private var Logger = LogFactory.getLog("DoctorController.class")
 
@@ -36,20 +39,16 @@ class ProductController {
         return result
     }
 
-    /*@CrossOrigin(origins = ["http://localhost:3000"])
+    @CrossOrigin(origins = ["http://localhost:3000"])
     @GetMapping("/{name}")
     fun getProductByName(@PathVariable name: String): List<Product> {
         val result: List<Product> = productService.getProductByName(name)
         return result
-    }*/
+    }
 
     @CrossOrigin(origins = ["http://localhost:3000"])
     @GetMapping("/popular")
-    fun getProductByPopular(): List<Product> {
-        val result: List<Product> = productService.getProductByPopular(1)
-        Logger.warn(result)
-        return result
-    }
+    fun getProductByPopular(): ResponseEntity<List<Product>> = ResponseEntity(productSql.findPopular(), HttpStatus.OK)
 
     @CrossOrigin(origins = ["http://localhost:3000"])
     @PostMapping("/nombre")
@@ -58,6 +57,13 @@ class ProductController {
         return ResponseEntity(result,HttpStatus.OK)
     }
 
+    @CrossOrigin(origins = ["http://localhost:3000"])
+    @GetMapping("/related/{category}/{id}")
+    fun findRelatedItems(@PathVariable category: String, @PathVariable id: Int) :ResponseEntity<List<Product>> = ResponseEntity(productSql.findRelatedItems(category,id), HttpStatus.OK)
+
+    @CrossOrigin(origins = ["http://localhost:3000"])
+    @GetMapping("/categoria/{id}")
+    fun findCategoria( @PathVariable id: Int) :ResponseEntity<List<Product>> = ResponseEntity(productSql.findCategoria(id), HttpStatus.OK)
 
 
 }

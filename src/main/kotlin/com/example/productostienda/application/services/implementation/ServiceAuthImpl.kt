@@ -1,8 +1,11 @@
 package com.example.productostienda.application.services.implementation
 
+import com.example.productostienda.application.domain.dao.IUserDao
+import com.example.productostienda.application.domain.entities.User
 import com.example.productostienda.application.services.IServiceAuth
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.AuthorityUtils.commaSeparatedStringToAuthorityList
 import org.springframework.stereotype.Service
@@ -13,8 +16,10 @@ import javax.servlet.http.HttpServletRequest
 @Service
 class ServiceAuthImpl() : IServiceAuth {
 
-
     lateinit var  secretKey:String
+
+    @Autowired
+    private lateinit var  userDao: IUserDao
 
     override fun getJWT(username: String, request: HttpServletRequest): String {
 
@@ -32,8 +37,10 @@ class ServiceAuthImpl() : IServiceAuth {
                         .collect(Collectors.toList()))
                 .setIssuedAt(Date(System.currentTimeMillis()))
                 .setExpiration(Date(System.currentTimeMillis() + 6000000000000000000))
-                .signWith(SignatureAlgorithm.HS512, "bragasdeesparto".toByteArray()).compact()
+                .signWith(SignatureAlgorithm.HS512, "creditas".toByteArray()).compact()
 
         return "Bearer "+ token
     }
+
+    override fun addUser(user: User): User = userDao.save(user)
 }

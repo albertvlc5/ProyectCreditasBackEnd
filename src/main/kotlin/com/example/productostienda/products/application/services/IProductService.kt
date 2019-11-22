@@ -12,7 +12,7 @@ interface IProductService {
 
     fun getProductByName(name: String) : List<Product>
 
-    fun getProductByPopular(popular:Int): List<Product>
+    //fun getProductByPopular(popular:Int): List<Product>
 
     fun getProductsByName(name:String) : List<Product>
 

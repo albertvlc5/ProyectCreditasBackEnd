@@ -34,17 +34,15 @@ class PurchaseController {
 
     }
     @CrossOrigin(origins = ["http://localhost:3000"])
-    @RequestMapping("/","GET","application/json")
+    @RequestMapping("/getall","GET","application/json")
     fun getPurchase():ResponseEntity<List<Purchase>> = ResponseEntity(purchaseService.getPurchase(), HttpStatus.OK)
 
-   /* @CrossOrigin(origins = ["http://localhost:3000"])
-    @RequestMapping("/lastpurchase/{id}")
-    fun getLast(@PathVariable id: Int):ResponseEntity<List<Purchase>> = ResponseEntity(purchaseSql.dimeultimo(id), HttpStatus.OK)
-*/
     @CrossOrigin(origins = ["http://localhost:3000"])
     @RequestMapping("/lastpurchase/{id}")
     fun getLast(@PathVariable id: Int):ResponseEntity<List<Purchase>> = ResponseEntity(purchaseSql.ultimoproducto(id), HttpStatus.OK)
 
-
+    @CrossOrigin(origins = ["http://localhost:3000"])
+    @RequestMapping("/getall/{id}","GET","application/json")
+    fun getAllPurchasesByID(@PathVariable id: Int):ResponseEntity<List<Purchase>> = ResponseEntity(purchaseSql.getAllPurchasesById(id), HttpStatus.OK)
 
 }

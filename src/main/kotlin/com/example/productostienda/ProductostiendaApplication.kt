@@ -30,7 +30,7 @@ class ProductostiendaApplication {
                     .cors()
                     .and()
                     .csrf().disable()
-                    .antMatcher("/api/v1/pepe").authorizeRequests()
+                    .antMatcher("/api/v1/purchase").authorizeRequests()
                     .anyRequest().authenticated()
                     .and()
                     .addFilterBefore(JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter::class.java)

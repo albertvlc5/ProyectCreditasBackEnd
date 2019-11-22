@@ -1,13 +1,6 @@
 package com.example.productostienda.application.domain.entities
 
-
-import com.example.productostienda.purchase.domain.entities.Purchase
-import com.fasterxml.jackson.annotation.JsonBackReference
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonManagedReference
 import com.sun.istack.NotNull
-import org.hibernate.annotations.Fetch
-import org.hibernate.annotations.FetchMode
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -17,6 +10,7 @@ data class User(
         @Id
         @GeneratedValue
         var id: Int?,
+        @Column(unique = true)
         var username: String?,
         var password: String?,
         @NotNull

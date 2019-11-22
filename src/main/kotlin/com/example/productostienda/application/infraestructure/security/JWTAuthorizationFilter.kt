@@ -36,7 +36,7 @@ class JWTAuthorizationFilter:OncePerRequestFilter(){
 
         }
         filterChain.doFilter(request, response)
-        Logger.warn("He entrado por la puerta grande");
+        Logger.warn("He entrado");
 
       }
 
@@ -54,7 +54,7 @@ class JWTAuthorizationFilter:OncePerRequestFilter(){
 
     fun validateJWT(req:HttpServletRequest): Claims {
         var jwtToken:String =  req.getHeader(HEADER).replace(PREFIX," ")
-        return Jwts.parser().setSigningKey("bragasdeesparto".toByteArray())
+        return Jwts.parser().setSigningKey("creditas".toByteArray())
                 .parseClaimsJws(jwtToken).body
         }
 

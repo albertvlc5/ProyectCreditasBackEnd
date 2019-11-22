@@ -24,13 +24,12 @@ class ProductServiceImpl : IProductService {
 
     override fun getProductByName(name: String): List<Product> = productDao.getProductByName(name)
 
-    override fun getProductByPopular(popular: Int): List<Product> {
+   /* override fun getProductByPopular(popular: Int): List<Product> {
         Logger.warn(popular.toString())
-
         val result = productDao.findByPopular(popular)
         Logger.warn(result)
        return result
-    }
+    }*/
 
     override fun getProductsByName(name: String): List<Product> {
         var result =productDao.findAll();

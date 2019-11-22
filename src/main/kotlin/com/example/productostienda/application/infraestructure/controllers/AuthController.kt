@@ -20,6 +20,8 @@ class AuthController {
     lateinit var serviceJWT: IServiceAuth
     @Autowired
     lateinit var userDao: IUserDao
+    @Autowired
+    private lateinit var userService:IServiceAuth
 
     @CrossOrigin(origins = ["http://localhost:3000"])
     @PostMapping("/auth")
@@ -44,6 +46,19 @@ class AuthController {
         var userid =result.get().id as Int
         return ResponseEntity(userid ,HttpStatus.OK)
 
+    }
+
+    @CrossOrigin(origins = ["http://localhost:3000"])
+    @PostMapping("/register")
+    fun addDoctor(@RequestBody user:User):ResponseEntity<Unit>{
+        try {
+            Logger.warn("User creado")
+            userService.addUser(user)
+            return ResponseEntity(HttpStatus.CREATED)
+        }catch(e:Exception){
+            Logger.error(e.message)
+            return ResponseEntity(HttpStatus.BAD_GATEWAY)
+        }
     }
 
     
