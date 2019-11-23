@@ -1,15 +1,16 @@
 package com.example.productostienda.products.domain.dao
 
 import com.example.productostienda.products.domain.entities.Product
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.Query
-import org.springframework.data.repository.CrudRepository
+import org.springframework.data.repository.PagingAndSortingRepository
 
 
-interface IProductDao : CrudRepository<Product, Int> {
+interface IProductDao : PagingAndSortingRepository<Product, Int>  {
     fun getProductById(id: Int) : Product
-    fun findByCategory(category:String): List<Product>
-    fun getProductByName(name : String) : List<Product>
-    //fun findByPopular(popular: Int) : List<Product>
+    fun findAllByCategory(category:String,pageable: Pageable):Page<Product>
+    fun findAllByNameContains(name:String, pageable: Pageable) : Page<Product>
 
     @Query("SELECT * FROM productos.products where category LIKE ?1 and id!=?2",nativeQuery = true)
     fun findRelatedItems(category: String, id:Int) : List<Product>
@@ -17,7 +18,7 @@ interface IProductDao : CrudRepository<Product, Int> {
     @Query("SELECT * FROM productos.products WHERE productos.products.id =?1 ", nativeQuery = true)
     fun findCategoria(id:Int) : List<Product>
 
-    @Query("SELECT * FROM productos.products WHERE productos.products.popular=1 ", nativeQuery = true)
-    fun findPopular() : List<Product>
+    @Query("SELECT * FROM productos.products WHERE productos.products.popular=1", nativeQuery = true)
+    fun findPopular(pageable: Pageable) : Page<Product>
 
 }

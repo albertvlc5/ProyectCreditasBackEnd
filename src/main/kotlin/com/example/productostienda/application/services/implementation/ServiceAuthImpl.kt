@@ -16,18 +16,17 @@ import javax.servlet.http.HttpServletRequest
 @Service
 class ServiceAuthImpl() : IServiceAuth {
 
-    lateinit var  secretKey:String
+    lateinit var secretKey: String
 
     @Autowired
-    private lateinit var  userDao: IUserDao
+    private lateinit var userDao: IUserDao
 
     override fun getJWT(username: String, request: HttpServletRequest): String {
 
 
+        var grantedAuthorities: List<GrantedAuthority> = commaSeparatedStringToAuthorityList("ROLE_USER")
 
-        var grantedAuthorities:List<GrantedAuthority> = commaSeparatedStringToAuthorityList("ROLE_USER")
-
-        var  token:String = Jwts
+        var token: String = Jwts
                 .builder()
                 .claim("ip", request.getRemoteAddr())
                 .setId("Creditas")
@@ -39,7 +38,7 @@ class ServiceAuthImpl() : IServiceAuth {
                 .setExpiration(Date(System.currentTimeMillis() + 6000000000000000000))
                 .signWith(SignatureAlgorithm.HS512, "creditas".toByteArray()).compact()
 
-        return "Bearer "+ token
+        return "Bearer " + token
     }
 
     override fun addUser(user: User): User = userDao.save(user)

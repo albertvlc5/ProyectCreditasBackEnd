@@ -21,47 +21,43 @@ class AuthController {
     @Autowired
     lateinit var userDao: IUserDao
     @Autowired
-    private lateinit var userService:IServiceAuth
+    private lateinit var userService: IServiceAuth
 
     @CrossOrigin(origins = ["http://localhost:3000"])
     @PostMapping("/auth")
-    fun login(@RequestBody user: User, request:HttpServletRequest): ResponseEntity<Any>
-    {
+    fun login(@RequestBody user: User, request: HttpServletRequest): ResponseEntity<Any> {
         Logger.warn("Entra login")
         var result = userDao.findByUsername(user.username!!)
-        if(!result.isPresent) return ResponseEntity("Datos Incorrecto",HttpStatus.NOT_FOUND)
-        if(!user.password.equals(result.get().password)) return ResponseEntity("Datos Incorrecto", HttpStatus.NOT_FOUND)
+        if (!result.isPresent) return ResponseEntity("Datos Incorrecto", HttpStatus.NOT_FOUND)
+        if (!user.password.equals(result.get().password)) return ResponseEntity("Datos Incorrecto", HttpStatus.NOT_FOUND)
         Logger.warn(result)
-        var token:String = serviceJWT.getJWT(result.get().username as String, request)
-        Logger.warn("token ->"+token);
-        return ResponseEntity(token,HttpStatus.OK)
+        var token: String = serviceJWT.getJWT(result.get().username as String, request)
+        Logger.warn("token ->" + token);
+        return ResponseEntity(token, HttpStatus.OK)
 
     }
 
     @CrossOrigin(origins = ["http://localhost:3000"])
     @PostMapping("/id")
-    fun id(@RequestBody user: User, request:HttpServletRequest): ResponseEntity<Any>
-    {
+    fun id(@RequestBody user: User, request: HttpServletRequest): ResponseEntity<Any> {
         var result = userDao.findByUsername(user.username!!)
-        var userid =result.get().id as Int
-        return ResponseEntity(userid ,HttpStatus.OK)
+        var userid = result.get().id as Int
+        return ResponseEntity(userid, HttpStatus.OK)
 
     }
 
     @CrossOrigin(origins = ["http://localhost:3000"])
     @PostMapping("/register")
-    fun addDoctor(@RequestBody user:User):ResponseEntity<Unit>{
+    fun addDoctor(@RequestBody user: User): ResponseEntity<Unit> {
         try {
             Logger.warn("User creado")
             userService.addUser(user)
             return ResponseEntity(HttpStatus.CREATED)
-        }catch(e:Exception){
+        } catch (e: Exception) {
             Logger.error(e.message)
             return ResponseEntity(HttpStatus.BAD_GATEWAY)
         }
     }
-
-    
 
 
 }

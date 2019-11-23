@@ -9,24 +9,23 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-@Table(name="purchase")
-data class Purchase (
+@Table(name = "purchase")
+data class Purchase(
         @Id
         @GeneratedValue
-        var id : Int?,
+        var id: Int?,
         @NotNull
         var created_at: LocalDateTime = LocalDateTime.now(),
         var update_at: LocalDateTime?,
         //@JsonBackReference(value="user")
-       @ManyToOne(fetch= FetchType.EAGER)
-       @JoinColumn(name="user_id")
-       @JsonIgnoreProperties("purchase")
+        @ManyToOne(fetch = FetchType.EAGER)
+        @JoinColumn(name = "user_id")
+        @JsonIgnoreProperties("purchase")
         var user: User?,
         //@JsonBackReference(value="products")
-        @ManyToOne(fetch= FetchType.EAGER)
-        @JoinColumn(name="product_id")
+        @ManyToOne(fetch = FetchType.EAGER)
+        @JoinColumn(name = "product_id")
         @JsonIgnoreProperties("purchase")
-
         var product: Product?
 )
 

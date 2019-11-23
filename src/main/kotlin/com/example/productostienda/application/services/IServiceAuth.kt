@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest
 
 
 interface IServiceAuth {
-    fun getJWT(username:String, request:HttpServletRequest ):String
+    fun getJWT(username: String, request: HttpServletRequest): String
 
-    fun addUser(user: User) : User
+    fun addUser(user: User): User
 }

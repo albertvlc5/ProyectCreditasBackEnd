@@ -1,7 +1,6 @@
 package com.example.productostienda.products.domain.entities
 
 import com.example.productostienda.purchase.domain.entities.Purchase
-import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import com.sun.istack.NotNull

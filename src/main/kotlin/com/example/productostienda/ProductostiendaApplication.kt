@@ -22,9 +22,8 @@ class ProductostiendaApplication {
     @EnableWebSecurity
     @Configuration
 
-    class WebSecurityConfig: WebSecurityConfigurerAdapter()
-    {
-        override fun configure(httpSecurity: HttpSecurity){
+    class WebSecurityConfig : WebSecurityConfigurerAdapter() {
+        override fun configure(httpSecurity: HttpSecurity) {
 
             httpSecurity
                     .cors()
